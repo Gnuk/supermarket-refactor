@@ -69,13 +69,13 @@ export class ShoppingCart {
         if (offer.offerType == SpecialOfferType.FiveForAmount) {
           x = 5;
           numberOfXs = Math.floor(quantityAsInt / x);
+          if (quantityAsInt >= 5) {
+            const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + (quantityAsInt % 5) * unitPrice);
+            discount = new Discount(product, x + ' for ' + offer.argument, discountTotal);
+          }
         }
         if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
           discount = new Discount(product, offer.argument + '% off', (quantity * unitPrice * offer.argument) / 100.0);
-        }
-        if (offer.offerType == SpecialOfferType.FiveForAmount && quantityAsInt >= 5) {
-          const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + (quantityAsInt % 5) * unitPrice);
-          discount = new Discount(product, x + ' for ' + offer.argument, discountTotal);
         }
         if (discount != null) receipt.addDiscount(discount);
       }
