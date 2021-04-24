@@ -53,6 +53,10 @@ export class ShoppingCart {
         if (offer.offerType == SpecialOfferType.ThreeForTwo) {
           x = 3;
           numberOfXs = Math.floor(quantityAsInt / x);
+          if (quantityAsInt > 2) {
+            const discountAmount = quantity * unitPrice - (numberOfXs * 2 * unitPrice + (quantityAsInt % 3) * unitPrice);
+            discount = new Discount(product, '3 for 2', discountAmount);
+          }
         } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
           x = 2;
           if (quantityAsInt >= 2) {
@@ -65,10 +69,6 @@ export class ShoppingCart {
         if (offer.offerType == SpecialOfferType.FiveForAmount) {
           x = 5;
           numberOfXs = Math.floor(quantityAsInt / x);
-        }
-        if (offer.offerType == SpecialOfferType.ThreeForTwo && quantityAsInt > 2) {
-          const discountAmount = quantity * unitPrice - (numberOfXs * 2 * unitPrice + (quantityAsInt % 3) * unitPrice);
-          discount = new Discount(product, '3 for 2', discountAmount);
         }
         if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
           discount = new Discount(product, offer.argument + '% off', (quantity * unitPrice * offer.argument) / 100.0);
