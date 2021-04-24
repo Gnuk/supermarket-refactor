@@ -49,8 +49,10 @@ export class ShoppingCart {
         const quantityAsInt = quantity;
         let discount: Discount | null = null;
         let x = 1;
+        let numberOfXs;
         if (offer.offerType == SpecialOfferType.ThreeForTwo) {
           x = 3;
+          numberOfXs = Math.floor(quantityAsInt / x);
         } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
           x = 2;
           if (quantityAsInt >= 2) {
@@ -58,11 +60,12 @@ export class ShoppingCart {
             const discountN = unitPrice * quantity - total;
             discount = new Discount(product, '2 for ' + offer.argument, discountN);
           }
+          numberOfXs = Math.floor(quantityAsInt / x);
         }
         if (offer.offerType == SpecialOfferType.FiveForAmount) {
           x = 5;
+          numberOfXs = Math.floor(quantityAsInt / x);
         }
-        const numberOfXs = Math.floor(quantityAsInt / x);
         if (offer.offerType == SpecialOfferType.ThreeForTwo && quantityAsInt > 2) {
           const discountAmount = quantity * unitPrice - (numberOfXs * 2 * unitPrice + (quantityAsInt % 3) * unitPrice);
           discount = new Discount(product, '3 for 2', discountAmount);
