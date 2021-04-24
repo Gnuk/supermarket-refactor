@@ -19,10 +19,6 @@ export class ShoppingCart {
     return _.clone(this.items);
   }
 
-  addItem(product: Product): void {
-    this.addItemQuantity(product, 1.0);
-  }
-
   productQuantities(): ProductQuantities {
     return this._productQuantities;
   }
