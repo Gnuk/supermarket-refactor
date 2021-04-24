@@ -8,8 +8,8 @@ import { Receipt } from './Receipt';
 import { SpecialOfferType } from './SpecialOfferType';
 import { SupermarketCatalog } from './SupermarketCatalog';
 
-type ProductQuantities = { [productName: string]: ProductQuantity };
-export type OffersByProduct = { [productName: string]: Offer };
+type ProductQuantities = Record<string, ProductQuantity>;
+export type OffersByProduct = Record<string, Offer>;
 
 export class ShoppingCart {
   private readonly items: ProductQuantity[] = [];
