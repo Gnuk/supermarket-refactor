@@ -9,10 +9,7 @@ export class Receipt {
   private discounts: Discount[] = [];
 
   public getTotalPrice(): number {
-    let total = 0.0;
-    for (const item of this.items) {
-      total += item.totalPrice;
-    }
+    let total = this.items.reduce((previous, current) => previous + current.totalPrice, 0);
     for (const discount of this.discounts) {
       total -= discount.discountAmount;
     }
