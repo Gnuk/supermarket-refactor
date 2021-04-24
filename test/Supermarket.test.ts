@@ -1,5 +1,6 @@
 import { Product } from '../src/model/Product';
 import { ProductUnit } from '../src/model/ProductUnit';
+import { Quantity } from '../src/model/Quantity';
 import { Receipt } from '../src/model/Receipt';
 import { ShoppingCart } from '../src/model/ShoppingCart';
 import { SpecialOfferType } from '../src/model/SpecialOfferType';
@@ -21,7 +22,7 @@ const printDiscount = (price: number, quantity: number, offerType: SpecialOfferT
   catalog.addProduct(apples, price);
 
   const cart: ShoppingCart = new ShoppingCart();
-  cart.addItemQuantity(apples, quantity);
+  cart.addItemQuantity(apples, Quantity.of(quantity));
 
   const teller: Teller = new Teller(catalog);
   teller.addSpecialOffer(offerType, apples, 10.0);
@@ -40,8 +41,8 @@ describe('Supermarket', () => {
       catalog.addProduct(apples, APPLE_PRICE);
 
       const cart: ShoppingCart = new ShoppingCart();
-      cart.addItemQuantity(apples, 1);
-      cart.addItemQuantity(apples, 1);
+      cart.addItemQuantity(apples, Quantity.of(1));
+      cart.addItemQuantity(apples, Quantity.of(1));
 
       const teller: Teller = new Teller(catalog);
 
@@ -61,8 +62,8 @@ Total:                              3.98`);
       catalog.addProduct(apples, APPLE_PRICE);
 
       const cart: ShoppingCart = new ShoppingCart();
-      cart.addItemQuantity(apples, 1);
-      cart.addItemQuantity(apples, 1);
+      cart.addItemQuantity(apples, Quantity.of(1));
+      cart.addItemQuantity(apples, Quantity.of(1));
 
       const teller: Teller = new Teller(catalog);
       teller.addSpecialOffer(SpecialOfferType.TwoForAmount, apples, 10.0);
@@ -82,7 +83,7 @@ Total:                             10.00`);
       catalog.addProduct(apples, APPLE_PRICE);
 
       const cart: ShoppingCart = new ShoppingCart();
-      cart.addItemQuantity(apples, 1);
+      cart.addItemQuantity(apples, Quantity.of(1));
 
       const teller: Teller = new Teller(catalog);
       teller.addSpecialOffer(SpecialOfferType.TwoForAmount, apples, 10.0);

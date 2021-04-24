@@ -21,8 +21,8 @@ export class Teller {
       const p = pq.product;
       const quantity = pq.quantity;
       const unitPrice = this.catalog.getUnitPrice(p);
-      const price = quantity * unitPrice;
-      receipt.addProduct(p, quantity, unitPrice, price);
+      const price = quantity.get() * unitPrice.get();
+      receipt.addProduct(p, quantity.get(), unitPrice.get(), price);
     }
     theCart.handleOffers(receipt, this.offers, this.catalog);
 

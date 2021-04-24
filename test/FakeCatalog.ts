@@ -1,3 +1,4 @@
+import { Price } from '../src/model/Price';
 import { Product } from '../src/model/Product';
 import { SupermarketCatalog } from '../src/model/SupermarketCatalog';
 
@@ -10,7 +11,7 @@ export class FakeCatalog implements SupermarketCatalog {
     this.prices[product.name] = price;
   }
 
-  public getUnitPrice(p: Product): number {
-    return this.prices[p.name];
+  public getUnitPrice(p: Product): Price {
+    return Price.of(this.prices[p.name]);
   }
 }

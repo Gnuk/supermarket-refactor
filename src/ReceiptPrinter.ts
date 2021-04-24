@@ -23,7 +23,7 @@ export class ReceiptPrinter {
     }
     for (const discount of receipt.getDiscounts()) {
       const productPresentation = discount.product.name;
-      const pricePresentation = this.format2Decimals(discount.discountAmount);
+      const pricePresentation = this.format2Decimals(discount.discountAmount.get());
       const description = discount.description;
       result += description;
       result += '(';
@@ -35,7 +35,7 @@ export class ReceiptPrinter {
       result += '\n';
     }
     result += '\n';
-    const pricePresentation = this.format2Decimals(receipt.getTotalPrice());
+    const pricePresentation = this.format2Decimals(receipt.getTotalPrice().get());
     const total = 'Total: ';
     const whitespace = ReceiptPrinter.getWhitespace(this.columns - total.length - pricePresentation.length);
     result += total;

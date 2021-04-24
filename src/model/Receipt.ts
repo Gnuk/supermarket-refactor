@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
 import { Discount } from './Discount';
+import { Price } from './Price';
 import { Product } from './Product';
 import { ReceiptItem } from './ReceiptItem';
 
@@ -8,15 +9,10 @@ export class Receipt {
   private items: ReceiptItem[] = [];
   private discounts: Discount[] = [];
 
-  public getTotalPrice(): number {
-    let total = 0.0;
-    for (const item of this.items) {
-      total += item.totalPrice;
-    }
-    for (const discount of this.discounts) {
-      total -= discount.discountAmount;
-    }
-    return total;
+  public getTotalPrice(): Price {
+    const itemTotal: Price = this.items.reduce((previous, current) => previous.add(Price.of(current.totalPrice)), Price.of(0));
+    const discountTotal: Price = this.discounts.reduce((previous, current) => previous.add(current.discountAmount), Price.of(0));
+    return itemTotal.substract(discountTotal);
   }
 
   public addProduct(p: Product, quantity: number, price: number, totalPrice: number): void {
