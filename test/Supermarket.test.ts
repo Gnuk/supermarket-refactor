@@ -1,3 +1,4 @@
+import { Discount } from '../src/model/Discount';
 import { Product } from '../src/model/Product';
 import { ProductUnit } from '../src/model/ProductUnit';
 import { Receipt } from '../src/model/Receipt';
@@ -5,6 +6,7 @@ import { ShoppingCart } from '../src/model/ShoppingCart';
 import { SpecialOfferType } from '../src/model/SpecialOfferType';
 import { SupermarketCatalog } from '../src/model/SupermarketCatalog';
 import { Teller } from '../src/model/Teller';
+import { ReceiptPrinter } from '../src/ReceiptPrinter';
 
 import { FakeCatalog } from './FakeCatalog';
 
@@ -21,13 +23,20 @@ describe('Supermarket', function () {
 
     const teller: Teller = new Teller(catalog);
     teller.addSpecialOffer(SpecialOfferType.TenPercentDiscount, toothbrush, 10.0);
+    teller.addSpecialOffer(SpecialOfferType.TenPercentDiscount, apples, 10.0);
 
     const receipt: Receipt = teller.checksOutArticlesFrom(cart);
 
-    // Todo: complete this test
-    expect(receipt).toEqual({
-      discounts: [],
-      items: [{ price: 1.99, product: { name: 'apples', unit: 0 }, quantity: 2.5, totalPrice: 4.975 }],
-    });
+    const receiptPrinter = new ReceiptPrinter();
+
+    const printed = receiptPrinter.printReceipt(receipt);
+
+    expect(printed).toBe(
+      `apples                              4.98
+  1.99 * 2.500
+10% off(apples)                    -0.50
+
+Total:                              4.48`
+    );
   });
 });
