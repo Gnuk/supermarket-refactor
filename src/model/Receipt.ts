@@ -9,9 +9,17 @@ export class Receipt {
   private discounts: Discount[] = [];
 
   public getTotalPrice(): number {
-    let total = this.items.reduce((previous, current) => previous + current.totalPrice, 0);
-    total -= this.discounts.reduce((previous, current) => previous + current.discountAmount, 0);
-    return total;
+    const itemsPrice = this.getItemsPrice();
+    const discount = this.getDiscount();
+    return itemsPrice - discount;
+  }
+
+  private getDiscount(): number {
+    return this.discounts.reduce((previous, current) => previous + current.discountAmount, 0);
+  }
+
+  private getItemsPrice(): number {
+    return this.items.reduce((previous, current) => previous + current.totalPrice, 0);
   }
 
   public addProduct(p: Product, quantity: number, price: number, totalPrice: number): void {
