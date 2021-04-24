@@ -10,9 +10,7 @@ export class Receipt {
 
   public getTotalPrice(): number {
     let total = this.items.reduce((previous, current) => previous + current.totalPrice, 0);
-    for (const discount of this.discounts) {
-      total -= discount.discountAmount;
-    }
+    total -= this.discounts.reduce((previous, current) => previous + current.discountAmount, 0);
     return total;
   }
 
